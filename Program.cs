@@ -1,3 +1,4 @@
+using Măierean_Lorena_Lab2.Data;
 using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("Măierean_Lorena_Lab2Context") ?? throw new InvalidOperationException("Connection string 'Măierean_Lorena_Lab2Context' not found.");
