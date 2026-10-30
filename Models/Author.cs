@@ -11,6 +11,14 @@ namespace Măierean_Lorena_Lab2.Models
 
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
+        [Display(Name = "Full Name")]
+        public string FullName
+        {
+            get
+            {
+                return FirstName + " " + LastName;
+            }
+        }
 
         public ICollection<Book>? Books { get; set; }
     }
