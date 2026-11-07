@@ -44,25 +44,25 @@
                 <div class="table">
                     <table>
                         <tr>
-                           @{
+                           @if (Model?.AssignedCategoryDataList != null)
+                            {
                                 int cnt = 0;
-                                
                                 foreach (var cat in Model.AssignedCategoryDataList)
                                 {
                                     if (cnt++ % 3 == 0)
-                                {
-                                @:</tr><tr>
+                                    {
+                                        @:</tr><tr>
+                                    }
+                                    @:<td>
+                                        <input type="checkbox"
+                                               name="selectedCategories"
+                                               value="@cat.CategoryID"
+                                               @(Html.Raw(cat.Assigned ? "checked=\"checked\"" : "")) />
+                                        @cat.CategoryID @: @cat.Name
+                                    @:</td>
                                 }
-                                @:<td>
-                                    <input type="checkbox"
-                                        name="selectedCategories"
-                                        value="@cat.CategoryID"
-                                        @(Html.Raw(cat.Assigned ? "checked=\"checked\"" : "")) />
-                                    @cat.CategoryID @: @cat.Name
-                                @:</td>
-                           }   
-                        @:</tr>
-                        }
+                                @:</tr>
+                            }
                     </table>
                 </div>
             </div>
