@@ -1,13 +1,16 @@
+using Măierean_Lorena_Lab2.Data;
 using Măierean_Lorena_Lab2.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Măierean_Lorena_Lab2.Data;
 
 namespace Măierean_Lorena_Lab2.Pages.BookPages
 {
-    public class EditModel : BookCategoriesPageModel
+    [Authorize(Roles = "Admin")]
+   
+        public class EditModel : BookCategoriesPageModel
     {
         private readonly Măierean_Lorena_Lab2.Data.Măierean_Lorena_Lab2Context _context;
 

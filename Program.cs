@@ -12,11 +12,28 @@ builder.Services.AddDbContext<Măierean_Lorena_Lab2Context>(options => options.U
 builder.Services.AddDbContext<LibraryIdentityContext>(options => options.UseSqlServer(connectionString));
 
 // Configurăm Identity folosind ApplicationUser și LibraryIdentityContext
-builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
+    options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<LibraryIdentityContext>();
 
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminPolicy", policy =>
+        policy.RequireRole("Admin"));
+});
+
 // Add services to the container.
-builder.Services.AddRazorPages();
+builder.Services.AddRazorPages(options =>
+{
+    options.Conventions.AuthorizeFolder("/Books");
+    options.Conventions.AllowAnonymousToPage("/Books/Index");
+    options.Conventions.AllowAnonymousToPage("/Books/Details");
+
+    options.Conventions.AuthorizeFolder("/MemberPages", "AdminPolicy");
+    options.Conventions.AuthorizeFolder("/PublisherPages", "AdminPolicy");
+    options.Conventions.AuthorizeFolder("/CategoryPages", "AdminPolicy");
+});
 
 var app = builder.Build();
 
@@ -29,6 +46,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseRouting();
+app.UseAuthentication();
 
 app.UseAuthorization();
 
